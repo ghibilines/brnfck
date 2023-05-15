@@ -67,14 +67,14 @@ int main(int argc,char **argv)
 			case '[':	{
 				g=instr;
 				loop=0;
-				if (*(pointer)==1)	{
+				if (*(pointer)==0)	{
 					for(i=0,c='['; c!=']' && i<LEN;i++)	{ 
 						c=*(instructions+instr+i);
 						j=i;      	}
 					instr+=j-1;	}
 				break;	}
 			case ']':	{
-				if ((*pointer)==0 && loop==0) { 
+				if ((*pointer)!=0 && loop==0) { 
 					instr=g-1;
 					loop=1;	}	
 				break;	}
