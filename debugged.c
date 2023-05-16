@@ -9,7 +9,7 @@ int main(int argc,char **argv)
 	unsigned int g;
 	int * instructions;
 	unsigned int instr;
-	int loop=1;
+	int loop=0;
 	int i, j;
 	short * mem;
 	short * pointer;
@@ -66,7 +66,7 @@ int main(int argc,char **argv)
 				break;	}
 			case '[':	{
 				g=instr;
-				loop=0;
+				loop++;
 				if (*(pointer)==0)	{
 					for(i=0,c='['; c!=']' && i<LEN;i++)	{ 
 						c=*(instructions+instr+i);
@@ -76,7 +76,7 @@ int main(int argc,char **argv)
 			case ']':	{
 				if ((*pointer)!=0 && loop==0) { 
 					instr=g-1;
-					loop=1;	}	
+					loop--;	}	
 				break;	}
 			default: break;
 		}
