@@ -74,7 +74,7 @@ int main(int argc,char **argv)
 					instr+=j-1;	}
 				break;	}
 			case ']':	{
-				if ((*pointer)!=0 && loop==0) { 
+				if ((*pointer)!=0 && loop!=0) { 
 					instr=g-1;
 					loop--;	}	
 				break;	}
