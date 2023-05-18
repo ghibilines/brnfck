@@ -6,14 +6,14 @@
 int main(int argc,char **argv)
 {
 	FILE *f;
-	unsigned int g;
 	int * instructions;
-	unsigned int instr;
+	unsigned int instr=0;
 	int loop=0;
 	int i, j;
 	short * mem;
 	short * pointer;
 	int c;
+	char d;
 	instructions = (int *) malloc(LEN*sizeof(int));
         mem = (short *) malloc(LEN*sizeof(short));
 	if (mem==NULL || instructions==NULL)    {
@@ -36,16 +36,17 @@ int main(int argc,char **argv)
 	else if (argc==1)	{
 		for(i=0;(c=getchar()) != '\n' && i<LEN;i++)	{
 			*(instructions+i) = c;
-			printf("read %c\n",c);
+			printf("read(%d) %c\n",i,c);
 		}
 	}
 	else if (argc!=1 && argc!=2)	{ return 1;}
 	pointer=mem;
-	for(instr=0;instr<LEN;instr++)
+	for(instr=0;0<=instr<LEN;instr++)
 	{
 		c=*(instructions+instr);
 		switch (c)	{
-			if (isspace(c) ) return 1;
+			case 0:
+				return 1;
 			case '>':	{
 				pointer++;
 				break;	}
@@ -59,24 +60,48 @@ int main(int argc,char **argv)
 				(*pointer)--;
 				break;	}
 			case '.':	{
-				printf("%d\n",*pointer);
+				printf("%hd\n",*pointer);
 				break;	}
 			case ',':	{
-				*(pointer) = getchar();
+				scanf("%hd",pointer);
 				break;	}
 			case '[':	{
-				g=instr;
-				loop++;
 				if (*(pointer)==0)	{
-					for(i=0,c='['; c!=']' && i<LEN;i++)	{ 
+					loop = -1;
+					for(i=0,c='['; loop!=0 && 0<=i+instr<LEN;i++)     {
 						c=*(instructions+instr+i);
-						j=i;      	}
-					instr+=j-1;	}
+                                	        if (i>0 && c=='[')       {
+							loop--;
+                                	        }
+						else if (c==']')	{
+							loop++;
+						}
+						else if (c==0)	{
+							printf("[syntaxerror");
+							return 1;
+						}
+					}
+					instr=instr+i-2;
+				}
 				break;	}
 			case ']':	{
-				if ((*pointer)!=0 && loop!=0) { 
-					instr=g-1;
-					loop--;	}	
+				if (*(pointer)!=0) {
+					loop = -1;
+                                        for(i=0,c=']'; loop!=0 && 0<=instr-i<LEN ;i++)     {
+                                                c=*(instructions+instr-i);
+                                                if (i>0 && c==']')       {
+                                                        loop--;
+                                                }
+						else if (c=='[')        {
+                                                        loop++;
+                                                }
+						else if (c==0)	{
+							printf("]syntax error");
+							return 1;
+						}
+                                        }
+                                        instr=instr-i-2;	
+				}
 				break;	}
 			default: break;
 		}
