@@ -81,7 +81,7 @@ int main(int argc,char **argv)
 							return 1;
 						}
 					}
-					instr=instr+i-2;
+					instr=instr+i-2;	//dont ask
 				}
 				break;	}
 			case ']':	{
@@ -100,7 +100,7 @@ int main(int argc,char **argv)
 							return 1;
 						}
                                         }
-                                        instr=instr-i-2;	
+                                        instr=instr-i-2;	//it just works okay?
 				}
 				break;	}
 			default: break;
