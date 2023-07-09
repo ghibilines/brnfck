@@ -1,5 +1,11 @@
 # brnfck
-A small brainfuck interpreter
+A small brainfuck interpreter/editor
+
+editor+interpreter.c is dependent on lib.h and in beta
+
+###########################################################################################
+
+below info about debugged.c (brainfuck interpreter) and brnfck3.c (brnfck3 interpreter)
 
 commandline options: filename
 
