@@ -9,7 +9,7 @@ int runloop(int * mem, int b, int * d, int len) //only returns ip
 {
 	int loop=0,i=0;
 	int c, temp;
-	int ip = b, *vp, *ret, vpjump=0;
+	int ip = b, *vp, *ret, vpjump=0, ipjump=0,ipret;
 	vp=d;
 	printf("\trunning %d\n",ip);
         for(;c!='x' && 0<=vp-mem<len &&  0<=ip<len;ip++)   {
@@ -20,6 +20,12 @@ int runloop(int * mem, int b, int * d, int len) //only returns ip
 			case 0: 	{
 				return ip;
 			}
+			case 'j':	{
+				ipret=ip;
+				ip=(*vp)-1;//post decrement in for loop
+				ipjump=1;
+				break;
+					}
                 	case 'v':       {
 				ret=vp;
                         	vp = mem + (*vp);
@@ -38,8 +44,13 @@ int runloop(int * mem, int b, int * d, int len) //only returns ip
 					vpjump=0;
 					break;
 				}
-				else if (vpjump==0)	{
-					printf("\nE: syntaxerror: no 'v' preceding 'r'\n");
+				else if (vpjump==0 && ipjump==1)	{
+					ip = ipret;
+					ipjump=0;
+					break;
+				}
+				else if (vpjump==0 && ipjump==0)	{
+					printf("\nE: syntaxerror: no 'v' or 'j' preceding 'r'\n");
 					return ip;
 				}
 				break;
@@ -115,11 +126,12 @@ int runloop(int * mem, int b, int * d, int len) //only returns ip
                                                 }
                        			}
                                         ip=ip+i-2;
+					printf("[ jumping to %d\n",ip);
 				}
                                 break;
 			}
 			case ']':       {
-                        	if (*(vp)!=0) {
+                        	if ((*(vp))!=0) {
                                 	loop = -1;
                                         for(i=0,c=']'; loop!=0 && 0<=ip-i<len ;i++)     {
                                         	c=*(mem+ip-i);
@@ -134,7 +146,8 @@ int runloop(int * mem, int b, int * d, int len) //only returns ip
                                                         break;
                                                 }
                                    	}
-                                        ip=ip-i-2;
+                                        ip=ip-i+1;
+					printf("] jumping to %d\n",ip);
                             	}
                                 break;
                		}
