@@ -1,8 +1,6 @@
 # brnfck
 A small brainfuck interpreter/editor
 
-editor+interpreter.c is dependent on lib.h and in beta
-
 brnfck43.c and functions4.h form the alpha version, and interprets brnfck4, but is backwards compatible with brnfck3 and regular brainfuck
 
 ############################################################################################
