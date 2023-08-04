@@ -1,7 +1,8 @@
 # brnfck
 A small brainfuck interpreter/editor
 
-brnfck43.c and functions4.h form the alpha version, and interprets brnfck4, but is backwards compatible with brnfck3 and regular brainfuck
+brnfck48.c and functions5.h form the SIGMA version, and interprets brnfck4, but is backwards compatible with brnfck3 and regular brainfuck
+now with recursive function calls
 
 ############################################################################################
 on brainfuck dialects
